@@ -7,6 +7,8 @@ import { generateHighchartsData } from './helper'
 const FoodConsumption = () => {
 
  const [foodConsumer, setFoodConsumer] = useState([])
+ const [dayList, setDayList] = useState([])
+
 
   useEffect(() => {
     fetch('/api/food-consumption.json')
@@ -15,39 +17,28 @@ const FoodConsumption = () => {
         setFoodConsumer(res.data.foodConsumption.daily)
       
       })
-      // console.log(foodConsumer)
-
-      foodConsumer.map((data)=>{
-        // let a= Array.sort(data);
-        console.log(data)
-       })
+      //make day in a month
+       let day = [];
+       for (let i = 1; i <= 31; i++) {
+         let a = `${i}/3`
+         day.push(a);
+         setDayList(day)
+       }
   }, [])
-  useEffect(() => {
-   
-      // console.log(foodConsumer)
 
-      // foodConsumer.filter((data)=>{
-      //   // let a= Array.sort(data);
-      //   if(data.day===3){
-      //     console.log(data);
-      //   }
-      //  })
-  }, [foodConsumer])
 return (
 
   <Grid container>
-      {/* <Grid container> */}
         <Box component={Paper} height="100%" width="100%">
-          <Box p={6}>
+          <Box p={8}>
           <HighchartsReact
               highcharts={Highcharts}
-              options={generateHighchartsData(foodConsumer)}
-              // constructorType={'columnChart'}
+              options={generateHighchartsData(foodConsumer,dayList)}
             />
           </Box>
         </Box>
       </Grid>
-    // </Grid>
+    
 )
 }
 
