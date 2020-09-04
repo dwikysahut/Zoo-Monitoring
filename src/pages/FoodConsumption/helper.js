@@ -8,6 +8,7 @@ export const generateHighchartsData = (foodConsumption = [],day=[]) => {
     };
     return newDataFoodCons;
   })
+  //sorting data 
   const sortedZooData = newData.sort((a, b) => parseInt(a.day) - parseInt(b.day));
 
 //reduce data in same day and same animal and sum the meat.
@@ -16,7 +17,6 @@ for(let i=0;i<sortedZooData.length;i++){
     if(sortedZooData[i].day === sortedZooData[j].day && sortedZooData[i].animal === sortedZooData[j].animal ){
       sortedZooData[i].meat+=sortedZooData[j].meat
       sortedZooData.splice(j,1)
-      
     }
   }
 } 
@@ -24,7 +24,6 @@ for(let i=0;i<sortedZooData.length;i++){
 const key=sortedZooData.filter(data=>{
   return data.day===1
 })
-  console.log(sortedZooData)
 
   const options = {
     chart: {
@@ -32,7 +31,8 @@ const key=sortedZooData.filter(data=>{
     },
     title: {
       text: 'Daily Food Consumption',
-      x: 0,
+      x: 10,
+      size:10,
       align: 'right',
     },
     xAxis: {
@@ -86,36 +86,35 @@ const key=sortedZooData.filter(data=>{
       },
     },
     series: [],
-  //   responsive: {
-  //     rules: [{
-  //         condition: {
-  //             maxWidth: 500
-  //         },
-  //         chartOptions: {
-  //             legend: {
-  //                 align: 'center',
-  //                 verticalAlign: 'bottom',
-  //                 layout: 'horizontal'
-  //             },
-  //             yAxis: {
-  //                 labels: {
-  //                     align: 'left',
-  //                     x: 0,
-  //                     y: -5
-  //                 },
-  //                 title: {
-  //                     text: null
-  //                 }
-  //             },
-  //             subtitle: {
-  //                 text: null
-  //             },
-  //             credits: {
-  //                 enabled: false
-  //             }
-  //         }
-  //     }]
-  // },
+    responsive: {
+      rules: [{
+          condition: {
+              maxWidth: 500
+          },
+          chartOptions: {
+            legend: {
+              enabled: false
+            },
+              yAxis: {
+                  labels: {
+                      align: 'left',
+                      x: 0,
+                      y: -5
+                  },
+                  title: {
+                      text: null
+                  }
+              },
+              subtitle: {
+                  text: null
+              },
+              credits: {
+                  enabled: false
+              }
+          }
+      },
+    ]
+  },
 
   }
   /* here if use dynamic data where the name of series include all and auto added to series from JSON.*/
