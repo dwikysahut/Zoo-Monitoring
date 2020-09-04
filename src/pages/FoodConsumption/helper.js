@@ -1,29 +1,31 @@
+export const generateHighchartsData = (foodConsumer = [],day=[]) => {
 
-export const generateHighchartsData = (foodConsumption = [],day=[]) => {
- // change meat to Kg and 2 decimal
-  const newData = foodConsumption.map(data => {
+
+  // change meat to Kg and 2 decimal
+  const newData = foodConsumer.map(data => {
     const newDataFoodCons = {
       ...data,
-      meat: Math.round((data.meat/1000) * 100) / 100 
+      meat: Math.round((data.meat / 1000) * 100) / 100
     };
     return newDataFoodCons;
   })
+
   //sorting data 
   const sortedZooData = newData.sort((a, b) => parseInt(a.day) - parseInt(b.day));
-
-//reduce data in same day and same animal and sum the meat.
-for(let i=0;i<sortedZooData.length;i++){
-  for(let j=sortedZooData.length-1;j>i;j--){
-    if(sortedZooData[i].day === sortedZooData[j].day && sortedZooData[i].animal === sortedZooData[j].animal ){
-      sortedZooData[i].meat+=sortedZooData[j].meat
-      sortedZooData.splice(j,1)
+  //reduce data in same day and same animal and sum the meat.
+  for (let i = 0; i < sortedZooData.length; i++) {
+    for (let j = sortedZooData.length - 1; j > i; j--) {
+      if (sortedZooData[i].day === sortedZooData[j].day && sortedZooData[i].animal === sortedZooData[j].animal) {
+        sortedZooData[i].meat += sortedZooData[j].meat
+        sortedZooData.splice(j, 1)
+      }
     }
   }
-} 
-//key for dynamic data
-const key=sortedZooData.filter(data=>{
-  return data.day===1
-})
+  console.log(sortedZooData)
+  //key for dynamic data
+  const key=sortedZooData.filter(data=>{
+    return data.day===1
+  })
 
   const options = {
     chart: {
@@ -120,10 +122,10 @@ const key=sortedZooData.filter(data=>{
   /* here if use dynamic data where the name of series include all and auto added to series from JSON.*/
 
   if (sortedZooData.length > 0) {
+    // eslint-disable-next-line array-callback-return
     key.map((key) => {
       options.series.push({
         name: key.animal,
-        //  color:['red','grey',"ForestGreen",'yellow','orange','limegreen','dodgerblue'],
         data: sortedZooData.map((data,i,arr) => ({
                   name: data.animal,
                   y: data.animal===key.animal &&data.meat,
