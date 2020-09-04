@@ -7,81 +7,27 @@ export const generateHighchartsData = (foodConsumption = []) => {
     };
     return newdataMeat;
   })
-  const sum=(data,i,arr)=>{
- 
-    arr.reduce(function(a, b){
-      // console.log(a)
-      return a + b;
-  }, 0);
-  }
-  
+
   const sortDataZoo = newData.sort((a, b) => parseInt(a.day) - parseInt(b.day));
-  var output = [{}];
+  console.log(sortDataZoo)
 
-
-for( let i in sortDataZoo){    
-  for (let key in sortDataZoo[i]){
-    if(output[0].hasOwnProperty(key)){
-    output[0][key]+=sortDataZoo[i][key];
-    }else{
-    output[0][key]=sortDataZoo[i][key];
+let noSameData=[]
+for(let i=0;i<sortDataZoo.length;i++){
+  // console.log(sortDataZoo[0])
+  for(let j=sortDataZoo.length-1;j>i;j--){
+    if(i!==j && sortDataZoo[i].day === sortDataZoo[j].day && sortDataZoo[i].animal === sortDataZoo[j].animal ){
+      sortDataZoo[i].meat+=sortDataZoo[j].meat
+      sortDataZoo.splice(j,1)
+      
     }
+  }
 }
+console.log(sortDataZoo)
 
-}
 
-console.log(output)
   console.log(sortDataZoo)
   let key=[]
   function createSeries(newData) {
-
-    // series = [
-    //   //data 1
-    //   [
-    //     {
-    //       "day": 1,
-    //       "month": 3,
-    //       "year": 2019,
-    //       "animal": "MACAN",
-    //       "meat": 5541.000000000004
-    //     },
-    //     {
-    //       "day": 1,
-    //       "month": 3,
-    //       "year": 2019,
-    //       "animal": "BUAYA",
-    //       "meat": 1065
-    //     },
-    //     {
-    //       "day": 1,
-    //       "month": 3,
-    //       "year": 2019,
-    //       "animal": "MACAN",
-    //       "meat": 16975.699999999935
-    //     },
-    //   ],
-    //   {
-    //     "day": 2,
-    //     "month": 3,
-    //     "year": 2019,
-    //     "animal": "MACAN",
-    //     "meat": 5541.000000000004
-    //   },
-    //   {
-    //     "day": 2,
-    //     "month": 3,
-    //     "year": 2019,
-    //     "animal": "BUAYA",
-    //     "meat": 1065
-    //   },
-    //   {
-    //     "day": 2,
-    //     "month": 3,
-    //     "year": 2019,
-    //     "animal": "MACAN",
-    //     "meat": 16975.699999999935
-    //   },
-    // ]
     var series = [];
     const sortDataZoo = newData.sort((a, b) => parseInt(a.day) - parseInt(b.day));
     // let i=0;
@@ -102,22 +48,7 @@ console.log(output)
         else{break;}
        
       }
-      
-      // if(i+1===sortDataZoo.day){
 
-      // }
-      // console.log(series[i])
-
-      // series.push({
-      //   name: data.animal,
-      //   // data: [
-      //   //   ["valueSum", data["valueSum"]],
-      //   //   ["value1", data.value["value1"]],
-      //   //   ["value2", data.value["value2"]]
-      //   // ]
-      // });
-      // i++;
-      // j=0;
     };
     console.log(series)
     return series;
@@ -157,10 +88,6 @@ console.log(output)
         enabled: true,
         style: {
           fontWeight: 'bold',
-          // color: ( // theme
-          //     Highcharts.defaultOptions.title.style &&
-          //     Highcharts.defaultOptions.title.style.color
-          // ) || 'gray'
         }
       }
     },
@@ -170,8 +97,6 @@ console.log(output)
       verticalAlign: 'top',
       y: 0,
       floating: true,
-      // backgroundColor:
-      //     Highcharts.defaultOptions.legend.backgroundColor || 'white',
       borderColor: '#CCC',
       borderWidth: 1,
       shadow: false,
@@ -187,7 +112,7 @@ console.log(output)
       series: {
         stacking: 'normal',
         dataLabels: {
-          enabled: true
+          // enabled: true
         }
       },
     },
@@ -220,7 +145,7 @@ console.log(output)
         name: 'Buaya',
         data: sortDataZoo.map((data) => ({
           name: data.animal,
-          y: data.animal==="BUAYA"?data.meat:0,
+          y: data.animal==="BUAYA" &&data.meat,
 
           x: data.day-1,
 
@@ -231,7 +156,7 @@ console.log(output)
         name: 'Singa',
         data: sortDataZoo.map((data) => ({
           name: data.animal,
-          y: data.animal==="SINGA"?data.meat:0,
+          y: data.animal==="SINGA" &&data.meat,
 
           x: data.day-1,
 
@@ -241,7 +166,7 @@ console.log(output)
         name: 'Macan',
         data: sortDataZoo.map((data) => ({
           name: data.animal,
-          y: data.animal==="MACAN"?data.meat:0,
+          y: data.animal==="MACAN" &&data.meat,
 
           x: data.day-1,
 
@@ -251,7 +176,7 @@ console.log(output)
         name: 'Ular',
         data: sortDataZoo.map((data) => ({
           name: data.animal,
-          y: data.animal==="ULAR"?data.meat:0,
+          y: data.animal==="ULAR" &&data.meat,
 
           x: data.day-1,
 
@@ -262,15 +187,10 @@ console.log(output)
         data: sortDataZoo.map((data) => ({
           name: data.animal,
            x: data.day-1,
-           y: data.animal==="LAINNYA"?data.meat:0,
-
-        //   color: 'blue'
+           y: data.animal==="LAINNYA" &&data.meat,
         }))
       }
-
-
     ]
-    // option.series=
   }
 
 
