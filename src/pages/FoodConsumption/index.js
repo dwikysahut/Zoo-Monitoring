@@ -15,7 +15,7 @@ const FoodConsumption = () => {
         setFoodConsumer(res.data.foodConsumption.daily)
       
       })
-      console.log(foodConsumer)
+      // console.log(foodConsumer)
 
       foodConsumer.map((data)=>{
         // let a= Array.sort(data);
