@@ -7,17 +7,9 @@ export const generateHighchartsData = (foodConsumer = []) => {
 
   }
 
-  // change meat to Kg and 2 decimal
-  const newData = foodConsumer.map(data => {
-    const newDataFoodCons = {
-      ...data,
-      meat: Math.round((data.meat / 1000) * 100) / 100
-    };
-    return newDataFoodCons;
-  })
-
   //sorting data 
-  const sortedZooData = newData.sort((a, b) => parseInt(a.day) - parseInt(b.day));
+  const sortedZooData = foodConsumer.sort((a, b) => parseInt(a.day) - parseInt(b.day));
+  
   //reduce data in same day and same animal and sum the meat.
   for (let i = 0; i < sortedZooData.length; i++) {
     for (let j = sortedZooData.length - 1; j > i; j--) {
@@ -27,7 +19,15 @@ export const generateHighchartsData = (foodConsumer = []) => {
       }
     }
   }
-  console.log(sortedZooData)
+  // change meat to Kg and 2 decimal
+  const newDataSorted = foodConsumer.map(data => {
+    const newDataFoodCons = {
+      ...data,
+      meat: Math.round((data.meat / 1000) * 100) / 100
+    };
+    return newDataFoodCons;
+  })
+  console.log(newDataSorted)
   //key for dynamic data
   const key = sortedZooData.filter(data => {
     return data.day === 1
@@ -135,13 +135,13 @@ export const generateHighchartsData = (foodConsumer = []) => {
   }
 
   /* here if use dynamic data where the name of series include all and auto added to series from JSON.*/
-  if (sortedZooData.length > 0) {
+  if (newDataSorted.length > 0) {
     // eslint-disable-next-line array-callback-return
     key.map((key) => {
       options.series.push({
         name: key.animal,
         borderRadius: 3,
-        data: sortedZooData.map((data, i, arr) => ({
+        data: newDataSorted.map((data, i, arr) => ({
           name: data.animal,
           y: data.animal === key.animal && data.meat,
           x: data.day - 1,
@@ -154,14 +154,14 @@ export const generateHighchartsData = (foodConsumer = []) => {
 
   /* here if use static data where same color order */
 
-  // if (foodConsumption.length > 0) {
+  // if (newDataSorted.length > 0) {
   //   options.series = [
   //     {
   //       name: 'Beruang',
   //       color:'red',
   //       borderRadius:3,
 
-  //       data: sortedZooData.map((data,i,arr) => ({
+  //       data: newDataSorted.map((data,i,arr) => ({
   //         name: data.animal,
   //         y: data.animal==="BERUANG" &&data.meat,
   //         x: data.day-1,
@@ -175,7 +175,7 @@ export const generateHighchartsData = (foodConsumer = []) => {
   //       borderRadius:3,
 
 
-  //       data:  sortedZooData.map((data) => ({
+  //       data:  newDataSorted.map((data) => ({
   //           name: data.animal,
   //           y: data.animal==="SERIGALA" &&data.meat,
 
@@ -189,7 +189,7 @@ export const generateHighchartsData = (foodConsumer = []) => {
   //       borderRadius:3,
 
 
-  //       data: sortedZooData.map((data) => ({
+  //       data: newDataSorted.map((data) => ({
   //         name: data.animal,
   //         y: data.animal==="BUAYA" &&data.meat,
 
@@ -203,7 +203,7 @@ export const generateHighchartsData = (foodConsumer = []) => {
   //       color:'yellow',
   //       borderRadius:3,
 
-  //       data: sortedZooData.map((data) => ({
+  //       data: newDataSorted.map((data) => ({
   //         name: data.animal,
   //         y: data.animal==="SINGA" &&data.meat,
 
@@ -216,7 +216,7 @@ export const generateHighchartsData = (foodConsumer = []) => {
   //       borderRadius:3,
   //       color:'orange',
 
-  //       data: sortedZooData.map((data) => ({
+  //       data: newDataSorted.map((data) => ({
   //         name: data.animal,
   //         y: data.animal==="MACAN" &&data.meat,
 
@@ -228,7 +228,7 @@ export const generateHighchartsData = (foodConsumer = []) => {
   //       name: 'Ular',
   //       color:'LimeGreen',
   //       borderRadius:3,
-  //       data: sortedZooData.map((data) => ({
+  //       data: newDataSorted.map((data) => ({
   //         name: data.animal,
   //         y: data.animal==="ULAR" &&data.meat,
 
@@ -241,7 +241,7 @@ export const generateHighchartsData = (foodConsumer = []) => {
   //       color:'DodgerBlue',
   //       borderRadius:3,
 
-  //       data: sortedZooData.map((data) => ({
+  //       data: newDataSorted.map((data) => ({
   //         name: data.animal,
   //          x: data.day-1,
   //          y: data.animal==="LAINNYA" &&data.meat,
