@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Grid, Paper,Container } from '@material-ui/core'
+import { Box, Grid, Paper} from '@material-ui/core'
 import Highcharts from 'highcharts/highstock'
 import HighchartsReact from 'highcharts-react-official'
 import { generateHighchartsData } from './helper'

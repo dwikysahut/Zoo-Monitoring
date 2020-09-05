@@ -9,7 +9,7 @@ export const generateHighchartsData = (foodConsumer = []) => {
 
   //sorting data 
   const sortedZooData = foodConsumer.sort((a, b) => parseInt(a.day) - parseInt(b.day));
-  
+
   //reduce data in same day and same animal and sum the meat.
   for (let i = 0; i < sortedZooData.length; i++) {
     for (let j = sortedZooData.length - 1; j > i; j--) {
@@ -28,6 +28,7 @@ export const generateHighchartsData = (foodConsumer = []) => {
     return newDataFoodCons;
   })
   console.log(newDataSorted)
+
   //key for dynamic data
   const key = sortedZooData.filter(data => {
     return data.day === 1
@@ -78,14 +79,13 @@ export const generateHighchartsData = (foodConsumer = []) => {
       y: 30,
       borderWidth: 0,
       shadow: false,
-      // verticalAlign: 'bottom',
       layout: 'horizontal'
 
     },
-    colors: ['red', 'gray', "ForestGreen", 'yellow', 'orange', 'limegreen', 'dodgerblue'],
+    colors: ['red', 'gray', "ForestGreen", 'gold', 'orange', 'limegreen', 'dodgerblue'],
     tooltip: {
       headerFormat: '<b>Period:{point.x}</b><br/>',
-      pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>',
+      pointFormat: ' <span style="color:{point.color}">\u25CF </span><span style="color:{black}">{series.name}</span>: <b>{point.y}</b><br/>',
       footerFormat: '<b>Total:  {point.total} </b>',
       shared: true
     },
@@ -93,7 +93,6 @@ export const generateHighchartsData = (foodConsumer = []) => {
       series: {
         stacking: 'normal',
         dataLabels: {
-          // enabled: true
         }
       },
     },
@@ -136,7 +135,6 @@ export const generateHighchartsData = (foodConsumer = []) => {
 
   /* here if use dynamic data where the name of series include all and auto added to series from JSON.*/
   if (newDataSorted.length > 0) {
-    // eslint-disable-next-line array-callback-return
     key.map((key) => {
       options.series.push({
         name: key.animal,
