@@ -3,15 +3,6 @@ import { Box, Grid, Paper,Container } from '@material-ui/core'
 import Highcharts from 'highcharts/highstock'
 import HighchartsReact from 'highcharts-react-official'
 import { generateHighchartsData } from './helper'
-
-const options = {
-  title: {
-    text: 'highcharts-react-official'
-  },
-  series: [{
-    data: [1, 5, 3, 4]
-  }]
-}
  
 const FoodConsumption = () => {
 
@@ -32,13 +23,13 @@ const getData=()=>{
   return (
   
     <Grid spacing={3}  container>
-    <Grid xs={12} lg={12} item>
+    <Grid xs={11} lg={12} item>
       <Box component={Paper} height="100%" width="100%">
         <Box p={3}>
           <HighchartsReact
             highcharts={Highcharts}
-            options={options}
-            // containerProps={{ style: { height: "100%" } }}
+            options={generateHighchartsData(foodConsumer)}
+
           />
         </Box>
       </Box>
