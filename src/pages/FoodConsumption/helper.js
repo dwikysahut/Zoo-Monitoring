@@ -27,7 +27,7 @@ export const generateHighchartsData = (foodConsumer = []) => {
     };
     return newDataFoodCons;
   })
-  console.log(newDataSorted)
+  // console.log(newDataSorted)
 
   //key for dynamic data
   const key = sortedZooData.filter(data => {
