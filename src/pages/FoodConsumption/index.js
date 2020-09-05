@@ -31,14 +31,14 @@ const getData=()=>{
 
   return (
   
-    <Grid spacing={3} container>
-    <Grid xs={11} lg={12}>
+    <Grid spacing={3}  container>
+    <Grid xs={12} lg={12} item>
       <Box component={Paper} height="100%" width="100%">
-        <Box p={1}>
+        <Box p={3}>
           <HighchartsReact
             highcharts={Highcharts}
-            options={generateHighchartsData(foodConsumer)}
-            containerProps={{ style: { height: "100%" } }}
+            options={options}
+            // containerProps={{ style: { height: "100%" } }}
           />
         </Box>
       </Box>
