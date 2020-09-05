@@ -1,44 +1,50 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Grid, Paper } from '@material-ui/core'
+import { Box, Grid, Paper,Container } from '@material-ui/core'
 import Highcharts from 'highcharts/highstock'
 import HighchartsReact from 'highcharts-react-official'
 import { generateHighchartsData } from './helper'
 
+const options = {
+  title: {
+    text: 'highcharts-react-official'
+  },
+  series: [{
+    data: [1, 5, 3, 4]
+  }]
+}
+ 
 const FoodConsumption = () => {
 
   const [foodConsumer, setFoodConsumer] = useState([])
-   const [dayList, setDayList] = useState([])
 
+const getData=()=>{
+  fetch('/api/food-consumption.json')
+  .then((res) => res.json())
+  .then((res) => {
+    setFoodConsumer(res.data.foodConsumption.daily)
 
+  })
+}
   useEffect(() => {
-    fetch('/api/food-consumption.json')
-      .then((res) => res.json())
-      .then((res) => {
-        setFoodConsumer(res.data.foodConsumption.daily)
-
-      })
-    //make day in a month
-    let day = [];
-    for (let i = 1; i <= 31; i++) {
-      let a = `${i}/3`
-      day.push(a);
-      setDayList(day)
-    }
+    getData();
   }, [])
 
   return (
-
-    <Grid container>
+  
+    <Grid spacing={3} container>
+    <Grid xs={11} lg={12}>
       <Box component={Paper} height="100%" width="100%">
-        <Box p={8}>
+        <Box p={1}>
           <HighchartsReact
             highcharts={Highcharts}
-            options={generateHighchartsData(foodConsumer, dayList)}
+            options={generateHighchartsData(foodConsumer)}
             containerProps={{ style: { height: "100%" } }}
           />
         </Box>
       </Box>
     </Grid>
+    </Grid>
+    
 
   )
 }

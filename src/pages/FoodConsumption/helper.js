@@ -1,5 +1,11 @@
-export const generateHighchartsData = (foodConsumer = [],day=[]) => {
+export const generateHighchartsData = (foodConsumer = []) => {
+  //make day in a month
+  const day = [];
+  for (let i = 1; i <= 31; i++) {
+    let a = `${i}/3`
+    day.push(a);
 
+  }
 
   // change meat to Kg and 2 decimal
   const newData = foodConsumer.map(data => {
@@ -23,18 +29,23 @@ export const generateHighchartsData = (foodConsumer = [],day=[]) => {
   }
   console.log(sortedZooData)
   //key for dynamic data
-  const key=sortedZooData.filter(data=>{
-    return data.day===1
+  const key = sortedZooData.filter(data => {
+    return data.day === 1
   })
 
   const options = {
     chart: {
       type: 'column',
+      height: 500,
+      marginTop: 120,
     },
     title: {
       text: 'Daily Food Consumption',
       x: 10,
-      size:10,
+      y: 10,
+      style: {
+        fontSize: '18px'
+      },
       align: 'right',
     },
     xAxis: {
@@ -43,7 +54,7 @@ export const generateHighchartsData = (foodConsumer = [],day=[]) => {
       title: {
         text: 'period'
       },
-      scrollbar: { enabled: true ,liveRedraw:false},
+      scrollbar: { enabled: true, liveRedraw: false },
       max: 12.5,
     },
     yAxis: {
@@ -52,6 +63,7 @@ export const generateHighchartsData = (foodConsumer = [],day=[]) => {
         text: 'Meat consumption (Kg)'
       },
       max: 150,
+      tickInterval: 25,
       stackLabels: {
         enabled: false,
         style: {
@@ -61,18 +73,16 @@ export const generateHighchartsData = (foodConsumer = [],day=[]) => {
     },
     legend: {
       align: 'Left',
-      x: 0,
       verticalAlign: 'top',
-      y: 0,
       floating: true,
-      borderColor: '#CCC',
+      y: 30,
       borderWidth: 0,
       shadow: false,
       // verticalAlign: 'bottom',
       layout: 'horizontal'
-      
+
     },
-    colors: ['red','grey',"ForestGreen",'yellow','orange','limegreen','dodgerblue'],
+    colors: ['red', 'gray', "ForestGreen", 'yellow', 'orange', 'limegreen', 'dodgerblue'],
     tooltip: {
       headerFormat: '<b>Period:{point.x}</b><br/>',
       pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>',
@@ -90,51 +100,56 @@ export const generateHighchartsData = (foodConsumer = [],day=[]) => {
     series: [],
     responsive: {
       rules: [{
-          condition: {
-              maxWidth: 500
-          },
-          chartOptions: {
-            legend: {
-              enabled: false
+        condition: {
+          maxWidth: 500
+        },
+        chartOptions: {
+          title: {
+            text: 'Daily Food Consumption',
+            x: 10,
+            y: 10,
+            style: {
+              fontSize: '15px'
             },
-              yAxis: {
-                  labels: {
-                      align: 'left',
-                      x: 0,
-                      y: -5
-                  },
-                  title: {
-                      text: null
-                  }
-              },
-              subtitle: {
-                  text: null
-              },
-              credits: {
-                  enabled: false
-              }
+            align: 'right',
+          },
+          yAxis: {
+            labels: {
+              // align: 'left',
+              x: 0,
+              y: 0,
+            },
+
+          },
+          subtitle: {
+            text: null
+          },
+          credits: {
+            enabled: false
           }
+        }
       },
-    ]
-  },
+      ]
+    },
 
   }
-  /* here if use dynamic data where the name of series include all and auto added to series from JSON.*/
 
+  /* here if use dynamic data where the name of series include all and auto added to series from JSON.*/
   if (sortedZooData.length > 0) {
     // eslint-disable-next-line array-callback-return
     key.map((key) => {
       options.series.push({
         name: key.animal,
-        data: sortedZooData.map((data,i,arr) => ({
-                  name: data.animal,
-                  y: data.animal===key.animal &&data.meat,
-                  x: data.day-1,
-        
-                }))
-    
+        borderRadius: 3,
+        data: sortedZooData.map((data, i, arr) => ({
+          name: data.animal,
+          y: data.animal === key.animal && data.meat,
+          x: data.day - 1,
+
+        }))
+
+      });
     });
-  });
   }
 
   /* here if use static data where same color order */
@@ -182,7 +197,7 @@ export const generateHighchartsData = (foodConsumer = [],day=[]) => {
 
   //       }))
   //     },
-      
+
   //     {
   //       name: 'Singa',
   //       color:'yellow',
