@@ -30,11 +30,11 @@ export const generateHighchartsData = (foodConsumer = []) => {
   })
 
   //key for dynamic data
-  const key = sortedZooData.reduce((unique, o) => {
-    if(!unique.some(obj => obj.animal === o.animal)) {
-      unique.push(o);
+  const key = sortedZooData.reduce((newArray, o) => {
+    if(!newArray.some(obj => obj.animal === o.animal)) {
+      newArray.push(o);
     }
-    return unique;
+    return newArray;
   },[]);
   console.log(key)
   const options = {
