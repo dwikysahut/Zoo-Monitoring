@@ -9,20 +9,14 @@ export const generateHighchartsData = (foodConsumer = []) => {
 
   //sorting data 
   const sortedZooData = foodConsumer.sort((a, b) => parseInt(a.day) - parseInt(b.day));
-  const key =sortedZooData;
+
   //reduce data in same day and same animal and sum the meat.
   for (let i = 0; i < sortedZooData.length; i++) {
     for (let j = sortedZooData.length - 1; j > i; j--) {
-      if(key[i].animal === key[j].animal){
-       
-      //  console.log(sortedZooData[j].day)
       if (sortedZooData[i].day === sortedZooData[j].day && sortedZooData[i].animal === sortedZooData[j].animal) {
         sortedZooData[i].meat += sortedZooData[j].meat
         sortedZooData.splice(j, 1)
       }
-      //key for dynamic data by Animal name
-      key.splice(j,1)
-    }
     }
   }
   // change meat to Kg and 2 decimal
@@ -32,6 +26,12 @@ export const generateHighchartsData = (foodConsumer = []) => {
       meat: Math.round((data.meat / 1000) * 100) / 100
     };
     return newDataFoodCons;
+  })
+  // console.log(newDataSorted)
+
+  //key for dynamic data
+  const key = sortedZooData.filter(data => {
+    return data.day === 1
   })
 
   const options = {
