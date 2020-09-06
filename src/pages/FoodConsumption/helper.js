@@ -19,6 +19,7 @@ export const generateHighchartsData = (foodConsumer = []) => {
       }
     }
   }
+
   // change meat to Kg and 2 decimal
   const newDataSorted = foodConsumer.map(data => {
     const newDataFoodCons = {
@@ -27,13 +28,15 @@ export const generateHighchartsData = (foodConsumer = []) => {
     };
     return newDataFoodCons;
   })
-  // console.log(newDataSorted)
 
   //key for dynamic data
-  const key = sortedZooData.filter(data => {
-    return data.day === 1
-  })
-
+  const key = sortedZooData.reduce((unique, o) => {
+    if(!unique.some(obj => obj.animal === o.animal)) {
+      unique.push(o);
+    }
+    return unique;
+  },[]);
+  console.log(key)
   const options = {
     chart: {
       type: 'column',
